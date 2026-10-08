@@ -1,0 +1,43 @@
+name: J4 P2 Batch 7
+on:
+  push:
+    branches: ['j4/p2g-*']
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash --noprofile --norc -eo pipefail {0}
+jobs:
+  verify:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        mutation: ${{ contains(github.ref, 'seeds') && fromJSON('[0,1,2,3,4]') || fromJSON('[-1]') }}
+    env:
+      RAILS_ENV: test
+      PARALLEL_WORKERS: '1'
+      APP_ENV: test
+      APP_DEBUG: '0'
+      SYMFONY_DEPRECATIONS_HELPER: disabled
+      TZ: UTC
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo_sqlite, mbstring, intl, dom
+          coverage: none
+          tools: composer:2.8.12
+      - run: composer update --no-interaction --prefer-dist --no-progress
+      - name: Verify fresh checkout
+        env:
+          J4_MUTATION: ${{ matrix.mutation }}
+        run: python3 j4_verify.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidence-${{ matrix.mutation }}
+          path: Evidence/
+          retention-days: 30

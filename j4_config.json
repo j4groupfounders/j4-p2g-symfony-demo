@@ -1,0 +1,18 @@
+{
+  "name": "symfony-demo",
+  "stack": "Symfony",
+  "upstream": "symfony/demo",
+  "old": "6.4.0",
+  "new": "7.4.0",
+  "reason": "Symfony 6 to 7 removes deprecated framework/security/validator APIs and requires PHP >=8.2; full blog, authenticated comments/admin, forms and CLI suite retained.",
+  "routes": [
+    "/",
+    "/en/login",
+    "/en/blog/",
+    "/en/blog/search?q=zzj4missing",
+    "/en/blog/rss.xml"
+  ],
+  "id": "p2-20-symfony-demo",
+  "repo": "j4groupfounders/j4-p2g-symfony-demo",
+  "source": "72040e73b3deed4281706bb5dda1ff1321f00396"
+}

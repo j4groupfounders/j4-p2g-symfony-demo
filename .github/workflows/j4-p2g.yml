@@ -35,6 +35,9 @@ jobs:
         env:
           J4_MUTATION: ${{ matrix.mutation }}
         run: python3 j4_verify.py
+      - name: Preserve existing application diagnostic logs
+        if: always()
+        run: mkdir -p Evidence/app-logs && cp -r var/log/. Evidence/app-logs/
       - uses: actions/upload-artifact@v4
         if: always()
         with:

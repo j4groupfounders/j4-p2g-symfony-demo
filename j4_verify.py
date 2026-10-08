@@ -24,6 +24,9 @@ def snapshots():
   except urllib.error.HTTPError as e:r=e
   b=r.read().decode('utf8','replace');assert r.code<500,(route,r.code,b[:200])
   b=re.sub(r'(name="(?:csrf-token|authenticity_token|_csrf_token)"[^>]*(?:content|value)=")[^"]+',r'\1<CSRF>',b)
+  if n=='symfony-demo':
+   b=re.sub(r'<!-- (Page|Fragment) rendered on .*? -->',r'<!-- \1 rendered on <CLOCK> -->',b)
+   if route.endswith('rss.xml'):b=re.sub(r'(<channel>.*?<pubDate>)[^<]+',r'\1<CLOCK>',b,count=1,flags=re.S)
   rows.append({'route':route,'status':r.code,'type':r.headers.get('Content-Type',''),'redirect':r.headers.get('Location'),'hash':hashlib.sha256(b.encode()).hexdigest(),'body':b})
  return rows
 try:

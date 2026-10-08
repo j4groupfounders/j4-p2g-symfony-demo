@@ -38,7 +38,7 @@ try:
  inv,detected=inventory();(E/'inventory.json').write_text(json.dumps(inv,indent=2));result.update(project_rc=rc,project_detected=detected)
  assert rc==0 or detected,'Test process failed without test failure: infrastructure'
  if (P/'j4-inventory.json').exists() and not detected:assert inv==json.loads((P/'j4-inventory.json').read_text()),'Test inventory changed'
- cmd=['bundle','exec','rails','server','-b','127.0.0.1','-p','8080'] if n=='sample-app' else ['php','-S','127.0.0.1:8080','-t','public','public/index.php']
+ cmd=['bundle','exec','rails','server','-b','127.0.0.1','-p','8080'] if n=='sample-app' else ['php','-d','variables_order=EGPCS','-S','127.0.0.1:8080','-t','public','public/index.php']
  with (E/'server.log').open('w') as log:
   server=subprocess.Popen(cmd,stdout=log,stderr=subprocess.STDOUT)
   try:

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "weak CLI passwords accepted",
+    "file": "src/Utils/Validator.php",
+    "old": "trim()->length() < 6",
+    "new": "trim()->length() < 1",
+    "count": 1
+  },
+  {
+    "name": "search excludes matching titles",
+    "file": "src/Repository/PostRepository.php",
+    "old": "p.title LIKE :t_",
+    "new": "p.title NOT LIKE :t_",
+    "count": 1
+  },
+  {
+    "name": "blog ordering reversed",
+    "file": "src/Repository/PostRepository.php",
+    "old": "->orderBy('p.publishedAt', 'DESC')",
+    "new": "->orderBy('p.publishedAt', 'ASC')",
+    "count": 2
+  },
+  {
+    "name": "comment persistence corrupts text",
+    "file": "src/Entity/Comment.php",
+    "old": "$this->content = $content;",
+    "new": "$this->content = 'corrupted';",
+    "count": 1
+  },
+  {
+    "name": "admin access denied to administrators",
+    "file": "src/Controller/Admin/BlogController.php",
+    "old": "#[IsGranted(User::ROLE_ADMIN)]",
+    "new": "#[IsGranted('ROLE_J4_NONEXISTENT')]",
+    "count": 1
+  }
+]

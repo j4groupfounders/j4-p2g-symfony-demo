@@ -30,7 +30,7 @@ jobs:
           extensions: pdo_sqlite, mbstring, intl, dom
           coverage: none
           tools: composer:2.8.12
-      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: composer update --no-interaction --prefer-dist --no-progress
       - name: Verify fresh checkout
         env:
           J4_MUTATION: ${{ matrix.mutation }}

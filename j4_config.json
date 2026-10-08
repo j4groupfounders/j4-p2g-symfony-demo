@@ -2,7 +2,7 @@
   "name": "symfony-demo",
   "stack": "Symfony",
   "upstream": "symfony/demo",
-  "old": "6.4.0",
+  "old": "6.4.47",
   "new": "7.4.0",
   "reason": "Symfony 6 to 7 removes deprecated framework/security/validator APIs and requires PHP >=8.2; full blog, authenticated comments/admin, forms and CLI suite retained.",
   "routes": [
